@@ -32,7 +32,16 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.PAT }}
-
+          
+      - name: Set version and branch environment variables
+        run: |
+            if [ "${{ github.event_name }}" == "release" ]; then
+            export VERSION="${{ github.ref_name }}"
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
+            else
+            export BRANCH_NAME="${{ github.ref }}"
+            echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+            fi
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
@@ -46,15 +55,6 @@ jobs:
           flavor: |
             latest=false
 
-      - name: Set version and branch environment variables
-        run: |
-          if [ "${{ github.event_name }}" == "release" ]; then
-            export VERSION="${{ github.ref_name }}"
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
-          else
-            export BRANCH_NAME="${{ github.ref }}"
-            echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
-          fi
 
       - name: Build and Push Docker image
         uses: docker/build-push-action@v4
