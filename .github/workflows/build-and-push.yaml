@@ -45,11 +45,16 @@ jobs:
             type=ref,event=branch
           flavor: |
             latest=false
-            
-      - name: Set version variable
-        id: version
-        run: echo "VERSION=$(if [ '${{ github.event_name }}' == 'release' ]; then echo '${{ github.ref_name }}'; else echo '${{ github.head_ref }}'; fi)" >> $GITHUB_ENV
 
+      - name: Set version and branch environment variables
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            export VERSION="${{ github.ref_name }}"
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
+          else
+            export BRANCH_NAME="${{ github.ref }}"
+            echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+          fi
 
       - name: Build and Push Docker image
         uses: docker/build-push-action@v4
