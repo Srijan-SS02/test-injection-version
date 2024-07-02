@@ -41,7 +41,6 @@ jobs:
             else
               RELEASE_VERSION="${{ github.ref }}"
               RELEASE_VERSION=${RELEASE_VERSION#refs/heads/} # Strip 'refs/heads/' prefix
-              cat RELEASE_VERSION
               echo "RELEASE_VERSION=main" >> "$GITHUB_ENV"
 
       - name: Debugging GITHUB_ENV
