@@ -32,17 +32,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.PAT }}
 
-      - name: Set version and branch environment variables
+      - name: Set RELEASE_VERSION environment variable
         run: |
-          if [ "${{ github.event_name }}" == "release" ]; then
-            VERSION="${{ github.ref }}"
-            VERSION=${VERSION#refs/tags/} # Strip 'refs/tags/' prefix
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
-          else
-            VERSION="${{ github.ref }}"
-            VERSION=${BRANCH_NAME#refs/heads/} # Strip 'refs/heads/' prefix
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
-          fi
+            if [ "${{ github.event_name }}" == "release" ]; then
+              RELEASE_VERSION="${{ github.ref }}"
+              RELEASE_VERSION=${RELEASE_VERSION#refs/tags/} # Strip 'refs/tags/' prefix
+              echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+            else
+              RELEASE_VERSION="${{ github.ref }}"
+              RELEASE_VERSION=${RELEASE_VERSION#refs/heads/} # Strip 'refs/heads/' prefix
+              echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
