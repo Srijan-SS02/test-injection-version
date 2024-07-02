@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Define the build argument
-ARG VERSION
+ARG RELEASE_VERSION
 
 # Set the environment variable
-ENV VERSION=${VERSION}
+ENV RELEASE_VERSION=${RELEASE_VERSION}
 
 # Expose the port the app runs on
 EXPOSE 3000
