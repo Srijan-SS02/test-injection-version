@@ -39,9 +39,9 @@ jobs:
             VERSION=${VERSION#refs/tags/} # Strip 'refs/tags/' prefix
             echo "VERSION=$VERSION" >> $GITHUB_ENV
           else
-            BRANCH_NAME="${{ github.ref }}"
-            BRANCH_NAME=${BRANCH_NAME#refs/heads/} # Strip 'refs/heads/' prefix
-            echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+            VERSION="${{ github.ref }}"
+            VERSION=${BRANCH_NAME#refs/heads/} # Strip 'refs/heads/' prefix
+            echo "VERSION=$VERSION" >> $GITHUB_ENV
           fi
 
       - name: Extract metadata (tags, labels) for Docker

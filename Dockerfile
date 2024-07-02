@@ -15,11 +15,9 @@ COPY . .
 
 # Define the build argument
 ARG VERSION
-ARG BRANCH_NAME
 
 # Set the environment variable
 ENV VERSION=${VERSION}
-ENV BRANCH_NAME=${BRANCH_NAME}
 
 # Expose the port the app runs on
 EXPOSE 3000
